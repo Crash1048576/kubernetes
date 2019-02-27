@@ -1,0 +1,111 @@
+##################################################################################################
+# Simple-ui
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: simple-ui
+  labels:
+    app: simple-ui
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: simple-ui
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: simple-ui
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: simple-ui
+        version: v1
+    spec:
+      containers:
+      - name: simple-ui
+        image: dmitriisultanov/simple-ui:1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+---
+##################################################################################################
+# Simple-service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: simple-service
+  labels:
+    app: simple-service
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: simple-service
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: simple-service-v1-red
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: simple-service
+        version: v1
+        color: RED
+    spec:
+      containers:
+      - name: simple-service
+        image: dmitriisultanov/simple-service:1.0.RED
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: simple-service-v1-green
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: simple-service
+        version: v1
+        color: GREEN
+    spec:
+      containers:
+      - name: simple-service
+        image: dmitriisultanov/simple-service:1.0.GREEN
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: simple-service-v2-yellow
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: simple-service
+        version: v2
+        color: YELLOW
+    spec:
+      containers:
+      - name: simple-service
+        image: dmitriisultanov/simple-service:2.0.YELLOW
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+---

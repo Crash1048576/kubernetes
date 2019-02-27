@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-service
+  labels:
+    app: simple-service
+    version: v1
+    color: RED
+spec:
+  containers:
+    - name: simple-service
+      image: dmitriisultanov/simple-service:1.0.RED
+      ports:
+      - containerPort: 8080
+      livenessProbe:
+        httpGet:
+          path: /health
+          port: 8080
+        initialDelaySeconds: 30
+        periodSeconds: 5
+      readinessProbe:
+        httpGet:
+          path: /health
+          port: 8080
+        initialDelaySeconds: 30

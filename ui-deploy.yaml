@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: simple-ui-v1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: simple-ui
+        version: v1
+    spec:
+      containers:
+      - name: simple-ui
+        image: dmitriisultanov/simple-ui:1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 5

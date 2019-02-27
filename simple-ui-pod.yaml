@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-ui
+  labels:
+    app: simple-ui
+spec:
+  containers:
+    - name: simple-ui
+      image: dmitriisultanov/simple-ui:1.0
+      ports:
+      - containerPort: 8080
+      livenessProbe:
+        httpGet:
+          path: /health
+          port: 8080
+        initialDelaySeconds: 30
+        periodSeconds: 5
+      readinessProbe:
+        httpGet:
+          path: /health
+          port: 8080
+        initialDelaySeconds: 30
